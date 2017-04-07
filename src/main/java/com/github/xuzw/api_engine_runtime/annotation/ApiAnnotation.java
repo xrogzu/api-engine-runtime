@@ -6,6 +6,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.github.xuzw.api_engine_runtime.api.Request;
+import com.github.xuzw.api_engine_runtime.api.Response;
+
 /**
  * @author 徐泽威 xuzewei_2012@126.com
  * @time 2017年4月7日 下午5:21:26
@@ -15,7 +18,7 @@ import java.lang.annotation.Target;
 public @interface ApiAnnotation {
     String name();
 
-    Class<?> requestClass();
+    Class<? extends Request> requestClass();
 
-    Class<?> responseClass();
+    Class<? extends Response> responseClass();
 }
