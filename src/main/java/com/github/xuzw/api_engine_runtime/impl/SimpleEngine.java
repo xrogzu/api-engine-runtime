@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.xuzw.api_engine_runtime.Engine;
-import com.github.xuzw.api_engine_runtime.api.Api;
+import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
 import com.github.xuzw.api_engine_runtime.exception.ApiExecuteException;
@@ -17,7 +17,7 @@ import com.github.xuzw.api_engine_runtime.exception.ApiNotFoundException;
  * @time 2017年4月7日 下午1:32:43
  */
 public class SimpleEngine implements Engine {
-    private Map<String, Api> map = new HashMap<>();
+    private Map<String, ApiWrapper> map = new HashMap<>();
 
     @Override
     public List<String> getApiNames() {
@@ -30,11 +30,12 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public void setApi(String name, Api api) {
-        map.put(name, api);
+    public void setApi(String name, ApiWrapper apiWrapper) {
+        map.put(name, apiWrapper);
     }
 
-    private Api _getApi(String name) {
+    @Override
+    public ApiWrapper getApiWrapper(String name) {
         return map.get(name);
     }
 
@@ -45,9 +46,8 @@ public class SimpleEngine implements Engine {
             throw new ApiNotFoundException(name);
         }
         request.setExecuteByEngineTimestamp(System.currentTimeMillis());
-        Response response = _getApi(name).execute(request);
+        Response response = getApiWrapper(name).getApi().execute(request);
         response.setOverByEngineTimestamp(System.currentTimeMillis());
         return response;
     }
-
 }

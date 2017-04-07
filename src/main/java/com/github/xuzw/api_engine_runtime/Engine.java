@@ -2,7 +2,7 @@ package com.github.xuzw.api_engine_runtime;
 
 import java.util.List;
 
-import com.github.xuzw.api_engine_runtime.api.Api;
+import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
 import com.github.xuzw.api_engine_runtime.exception.ApiExecuteException;
@@ -17,7 +17,9 @@ public interface Engine {
 
     boolean hasApi(String name);
 
-    void setApi(String name, Api api);
+    void setApi(String name, ApiWrapper apiWrapper);
+
+    ApiWrapper getApiWrapper(String name);
 
     Response execute(Request request) throws ApiNotFoundException, ApiExecuteException;
 }
