@@ -3,7 +3,8 @@ package com.github.xuzw.api_engine_runtime.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.xuzw.api_engine_runtime.annotation.Api;
+import com.github.xuzw.api_engine_runtime.annotation.ApiAnnotation;
+import com.github.xuzw.api_engine_runtime.api.Api;
 import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
@@ -17,12 +18,12 @@ public class AnnotationEngine extends SimpleEngine {
     private Logger logger = LoggerFactory.getLogger(AnnotationEngine.class);
 
     public AnnotationEngine() {
-        new FastClasspathScanner().matchClassesWithAnnotation(Api.class, new ClassAnnotationMatchProcessor() {
+        new FastClasspathScanner().matchClassesWithAnnotation(ApiAnnotation.class, new ClassAnnotationMatchProcessor() {
             @Override
             public void processMatch(Class<?> classWithAnnotation) {
-                Api apiAnnotation = classWithAnnotation.getAnnotation(Api.class);
+                ApiAnnotation apiAnnotation = classWithAnnotation.getAnnotation(ApiAnnotation.class);
                 try {
-                    com.github.xuzw.api_engine_runtime.api.Api apiInstance = (com.github.xuzw.api_engine_runtime.api.Api) classWithAnnotation.newInstance();
+                    Api apiInstance = (Api) classWithAnnotation.newInstance();
                     Class<?> requestClass = apiAnnotation.requestClass();
                     Class<?> responseClass = apiAnnotation.responseClass();
                     logger.info("setApi, api={}, requestClass={}, responseClass={}", apiInstance, requestClass, responseClass);
