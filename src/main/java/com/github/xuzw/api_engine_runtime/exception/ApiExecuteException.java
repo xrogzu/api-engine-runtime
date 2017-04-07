@@ -6,16 +6,21 @@ package com.github.xuzw.api_engine_runtime.exception;
  */
 public class ApiExecuteException extends Exception {
     private static final long serialVersionUID = 1L;
+    private static final String format = "(%d) %s";
+    private int code;
+    private String message;
 
-    public ApiExecuteException(String message) {
-        super(message);
+    public ApiExecuteException(int code, String message) {
+        super(String.format(format, code, message));
+        this.code = code;
+        this.message = message;
     }
 
-    public ApiExecuteException(String message, Throwable cause) {
-        super(message, cause);
+    public int getCode() {
+        return code;
     }
 
-    public ApiExecuteException(Throwable cause) {
-        super(cause);
+    public String getMessage() {
+        return message;
     }
 }

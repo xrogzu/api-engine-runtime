@@ -12,19 +12,13 @@ public abstract class Response {
     private long overByEngineTimestamp;
 
     public void success() {
-        this.code = 0;
-    }
-
-    public void success(String message) {
-        this.code = 0;
-        this.message = message;
-    }
-
-    public void error(int code) {
-        this.code = code;
+        this.code = ResponseCode.success;
     }
 
     public void error(int code, String message) {
+        if (code == ResponseCode.success) {
+            code = ResponseCode.api_execute_exception;
+        }
         this.code = code;
         this.message = message;
     }

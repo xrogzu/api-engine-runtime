@@ -6,8 +6,14 @@ package com.github.xuzw.api_engine_runtime.exception;
  */
 public class ApiNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;
+    private String apiName;
 
-    public ApiNotFoundException(String name) {
-        super(name);
+    public ApiNotFoundException(String apiName) {
+        super(apiName);
+        this.apiName = apiName;
+    }
+
+    public String getApiName() {
+        return apiName;
     }
 }
