@@ -24,10 +24,11 @@ public class AnnotationEngine extends SimpleEngine {
                 ApiAnnotation apiAnnotation = classWithAnnotation.getAnnotation(ApiAnnotation.class);
                 try {
                     Api apiInstance = (Api) classWithAnnotation.newInstance();
+                    String name = apiAnnotation.name();
                     Class<?> requestClass = apiAnnotation.requestClass();
                     Class<?> responseClass = apiAnnotation.responseClass();
-                    logger.info("setApi, api={}, requestClass={}, responseClass={}", apiInstance, requestClass, responseClass);
-                    setApi(apiAnnotation.name(), new ApiWrapper(apiInstance, requestClass, responseClass));
+                    logger.info("setApi, name={}, api={}, requestClass={}, responseClass={}", name, apiInstance, requestClass.getName(), responseClass.getName());
+                    setApi(name, new ApiWrapper(apiInstance, requestClass, responseClass));
                 } catch (InstantiationException | IllegalAccessException e) {
                     logger.error("", e);
                 }
