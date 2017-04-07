@@ -6,7 +6,27 @@ package com.github.xuzw.api_engine_runtime;
  */
 public abstract class Response {
     private String apiName;
+    private int code;
+    private String message;
     private long overByEngineTimestamp;
+
+    public void success() {
+        this.code = 0;
+    }
+
+    public void success(String message) {
+        this.code = 0;
+        this.message = message;
+    }
+
+    public void error(int code) {
+        this.code = code;
+    }
+
+    public void error(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
     public String getApiName() {
         return apiName;
@@ -14,6 +34,22 @@ public abstract class Response {
 
     public void setApiName(String apiName) {
         this.apiName = apiName;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public long getOverByEngineTimestamp() {
