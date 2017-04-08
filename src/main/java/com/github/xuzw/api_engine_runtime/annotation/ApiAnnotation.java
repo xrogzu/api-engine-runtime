@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
-import com.github.xuzw.api_engine_runtime.api.SimpleRequest;
-import com.github.xuzw.api_engine_runtime.api.SimpleResponse;
 
 /**
  * @author 徐泽威 xuzewei_2012@126.com
@@ -26,10 +24,10 @@ public @interface ApiAnnotation {
     /**
      * @return API请求类
      */
-    Class<? extends Request> requestClass() default SimpleRequest.class;
+    Class<? extends Request> requestClass() default Request.class;
 
     /**
      * @return API响应类
      */
-    Class<? extends Response> responseClass() default SimpleResponse.class;
+    Class<? extends Response> responseClass() default Response.class;
 }

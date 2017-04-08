@@ -9,8 +9,6 @@ import com.github.xuzw.api_engine_runtime.api.Api;
 import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
-import com.github.xuzw.api_engine_runtime.api.SimpleRequest;
-import com.github.xuzw.api_engine_runtime.api.SimpleResponse;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.matchprocessor.ImplementingClassMatchProcessor;
@@ -28,8 +26,8 @@ public class AutoScanEngine extends SimpleEngine {
             @Override
             public void processMatch(Class<? extends Api> apiClass) {
                 String apiName = apiClass.getSimpleName();
-                Class<?> requestClass = SimpleRequest.class;
-                Class<?> responseClass = SimpleResponse.class;
+                Class<?> requestClass = Request.class;
+                Class<?> responseClass = Response.class;
                 for (Class<?> innerClass : apiClass.getDeclaredClasses()) {
                     if (Request.class.isAssignableFrom(innerClass)) {
                         requestClass = innerClass;
@@ -41,10 +39,10 @@ public class AutoScanEngine extends SimpleEngine {
                 if (apiAnnotation != null && StringUtils.isNotBlank(apiAnnotation.value())) {
                     apiName = apiAnnotation.value();
                 }
-                if (apiAnnotation != null && apiAnnotation.requestClass() != SimpleRequest.class) {
+                if (apiAnnotation != null && apiAnnotation.requestClass() != Request.class) {
                     requestClass = apiAnnotation.requestClass();
                 }
-                if (apiAnnotation != null && apiAnnotation.responseClass() != SimpleResponse.class) {
+                if (apiAnnotation != null && apiAnnotation.responseClass() != Response.class) {
                     requestClass = apiAnnotation.responseClass();
                 }
                 logger.info("setApi, name={}, apiClass={}, requestClass={}, responseClass={}", apiName, apiClass.getName(), requestClass.getName(), responseClass.getName());
