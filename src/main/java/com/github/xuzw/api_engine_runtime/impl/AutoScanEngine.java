@@ -38,8 +38,8 @@ public class AutoScanEngine extends SimpleEngine {
                     }
                 }
                 ApiAnnotation apiAnnotation = apiClass.getAnnotation(ApiAnnotation.class);
-                if (apiAnnotation != null && StringUtils.isNotBlank(apiAnnotation.name())) {
-                    apiName = apiAnnotation.name();
+                if (apiAnnotation != null && StringUtils.isNotBlank(apiAnnotation.value())) {
+                    apiName = apiAnnotation.value();
                 }
                 if (apiAnnotation != null && apiAnnotation.requestClass() != SimpleRequest.class) {
                     requestClass = apiAnnotation.requestClass();

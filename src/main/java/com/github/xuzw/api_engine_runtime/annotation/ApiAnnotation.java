@@ -18,7 +18,7 @@ import com.github.xuzw.api_engine_runtime.api.SimpleResponse;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface ApiAnnotation {
-    String name() default "";
+    String value() default "";
 
     Class<? extends Request> requestClass() default SimpleRequest.class;
 
