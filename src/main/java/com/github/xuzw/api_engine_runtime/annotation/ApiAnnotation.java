@@ -18,9 +18,18 @@ import com.github.xuzw.api_engine_runtime.api.SimpleResponse;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface ApiAnnotation {
+    /**
+     * @return API名字
+     */
     String value() default "";
 
+    /**
+     * @return API请求类
+     */
     Class<? extends Request> requestClass() default SimpleRequest.class;
 
+    /**
+     * @return API响应类
+     */
     Class<? extends Response> responseClass() default SimpleResponse.class;
 }
