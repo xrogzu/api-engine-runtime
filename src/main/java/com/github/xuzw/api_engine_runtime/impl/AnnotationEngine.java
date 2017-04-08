@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import com.github.xuzw.api_engine_runtime.annotation.ApiAnnotation;
 import com.github.xuzw.api_engine_runtime.api.Api;
 import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
+import com.github.xuzw.api_engine_runtime.api.Request;
+import com.github.xuzw.api_engine_runtime.api.Response;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 import io.github.lukehutch.fastclasspathscanner.matchprocessor.ClassAnnotationMatchProcessor;
@@ -31,6 +33,13 @@ public class AnnotationEngine extends SimpleEngine {
                     }
                     Class<?> requestClass = apiAnnotation.requestClass();
                     Class<?> responseClass = apiAnnotation.responseClass();
+                    for (Class<?> innerClass : apiClass.getDeclaredClasses()) {
+                        if (Request.class.isAssignableFrom(innerClass)) {
+                            requestClass = innerClass;
+                        } else if (Response.class.isAssignableFrom(innerClass)) {
+                            responseClass = innerClass;
+                        }
+                    }
                     logger.info("setApi, name={}, apiClass={}, requestClass={}, responseClass={}", apiName, apiClass.getName(), requestClass.getName(), responseClass.getName());
                     setApi(apiName, new ApiWrapper(apiInstance, requestClass, responseClass));
                 } catch (InstantiationException | IllegalAccessException e) {
