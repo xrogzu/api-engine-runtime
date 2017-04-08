@@ -7,7 +7,7 @@ package com.github.xuzw.api_engine_runtime.api;
 public class Response {
     private String apiName;
     private String requestUuid;
-    private int code;
+    private int code = ResponseCode.success;
     private String message;
     private long overByEngineTimestamp;
 
