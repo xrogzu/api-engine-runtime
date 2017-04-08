@@ -1,5 +1,6 @@
 package com.github.xuzw.api_engine_runtime.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,15 +21,18 @@ public class AnnotationEngine extends SimpleEngine {
     public AnnotationEngine() {
         new FastClasspathScanner().matchClassesWithAnnotation(ApiAnnotation.class, new ClassAnnotationMatchProcessor() {
             @Override
-            public void processMatch(Class<?> classWithAnnotation) {
-                ApiAnnotation apiAnnotation = classWithAnnotation.getAnnotation(ApiAnnotation.class);
+            public void processMatch(Class<?> apiClass) {
+                ApiAnnotation apiAnnotation = apiClass.getAnnotation(ApiAnnotation.class);
                 try {
-                    Api apiInstance = (Api) classWithAnnotation.newInstance();
-                    String name = apiAnnotation.name();
+                    Api apiInstance = (Api) apiClass.newInstance();
+                    String apiName = apiAnnotation.name();
+                    if (StringUtils.isBlank(apiName)) {
+                        apiName = apiClass.getSimpleName();
+                    }
                     Class<?> requestClass = apiAnnotation.requestClass();
                     Class<?> responseClass = apiAnnotation.responseClass();
-                    logger.info("setApi, name={}, api={}, requestClass={}, responseClass={}", name, apiInstance, requestClass.getName(), responseClass.getName());
-                    setApi(name, new ApiWrapper(apiInstance, requestClass, responseClass));
+                    logger.info("setApi, name={}, apiClass={}, requestClass={}, responseClass={}", apiName, apiClass.getName(), requestClass.getName(), responseClass.getName());
+                    setApi(apiName, new ApiWrapper(apiInstance, requestClass, responseClass));
                 } catch (InstantiationException | IllegalAccessException e) {
                     logger.error("", e);
                 }
