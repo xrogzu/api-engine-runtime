@@ -1,15 +1,18 @@
 package com.github.xuzw.api_engine_runtime.api;
 
+import com.github.xuzw.api_engine_runtime.annotation.Comment;
+import com.github.xuzw.api_engine_runtime.annotation.Required;
+
 /**
  * @author 徐泽威 xuzewei_2012@126.com
  * @time 2017年4月7日 下午12:51:01
  */
 public class Response {
-    private String apiName;
-    private String requestUuid;
-    private int code = ResponseCode.success;
-    private String message;
-    private long overByEngineTimestamp;
+    @Comment("API接口名字") @Required(true) private String apiName;
+    @Comment("请求唯一标识符") @Required(true) private String requestUuid;
+    @Comment("错误码") @Required(true) private int code = ResponseCode.success;
+    @Comment("错误提示") @Required(false) private String message;
+    @Comment("请求被服务器处理完毕的时间戳") @Required(true) private long overByEngineTimestamp;
 
     public void success() {
         this.code = ResponseCode.success;
