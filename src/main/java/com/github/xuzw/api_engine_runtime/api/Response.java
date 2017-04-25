@@ -10,20 +10,21 @@ import com.github.xuzw.modeler_runtime.annotation.Required;
 public class Response {
     @Comment("API接口名字") @Required(true) private String apiName;
     @Comment("请求唯一标识符") @Required(true) private String requestUuid;
-    @Comment("错误码") @Required(true) private int code = ResponseCode.success;
-    @Comment("错误提示") @Required(false) private String message;
+    @Comment("错误码") @Required(true) private int code = ApiEngineResponseCodeEnum.success.getCode();
+    @Comment("错误提示") @Required(false) private String message = ApiEngineResponseCodeEnum.success.getMessage();
     @Comment("请求被服务器处理完毕的时间戳") @Required(true) private long overByEngineTimestamp;
 
     public void success() {
-        this.code = ResponseCode.success;
+        this.code = ApiEngineResponseCodeEnum.success.getCode();
+        this.message = ApiEngineResponseCodeEnum.success.getMessage();
     }
 
-    public void error(int code, String message) {
-        if (code == ResponseCode.success) {
-            code = ResponseCode.api_execute_exception;
+    public void error(ResponseCode responseCode) {
+        if (responseCode == ApiEngineResponseCodeEnum.success) {
+            responseCode = ApiEngineResponseCodeEnum.api_execute_exception;
         }
-        this.code = code;
-        this.message = message;
+        this.code = responseCode.getCode();
+        this.message = responseCode.getMessage();
     }
 
     public String getApiName() {
