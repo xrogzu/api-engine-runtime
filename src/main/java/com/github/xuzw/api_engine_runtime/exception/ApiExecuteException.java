@@ -1,5 +1,7 @@
 package com.github.xuzw.api_engine_runtime.exception;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import com.github.xuzw.api_engine_runtime.api.ResponseCode;
 
 /**
@@ -24,6 +26,10 @@ public class ApiExecuteException extends Exception {
 
     public ApiExecuteException(ResponseCode responseCode, String overrideMessage) {
         this(responseCode.getCode(), overrideMessage);
+    }
+
+    public ApiExecuteException(ResponseCode responseCode, Throwable e) {
+        this(responseCode.getCode(), ExceptionUtils.getMessage(e));
     }
 
     public int getCode() {
