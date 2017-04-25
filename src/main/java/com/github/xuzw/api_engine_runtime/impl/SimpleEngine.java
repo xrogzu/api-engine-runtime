@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.xuzw.api_engine_runtime.Engine;
+import com.github.xuzw.api_engine_runtime.api.ApiEngineResponseCodeEnum;
 import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
@@ -46,7 +47,12 @@ public class SimpleEngine implements Engine {
             throw new ApiNotFoundException(name);
         }
         request.setExecuteByEngineTimestamp(System.currentTimeMillis());
-        Response response = getApiWrapper(name).getApi().execute(request);
+        Response response;
+        try {
+            response = getApiWrapper(name).getApi().execute(request);
+        } catch (Exception e) {
+            throw new ApiExecuteException(ApiEngineResponseCodeEnum.api_execute_exception, e);
+        }
         response.setOverByEngineTimestamp(System.currentTimeMillis());
         return response;
     }
