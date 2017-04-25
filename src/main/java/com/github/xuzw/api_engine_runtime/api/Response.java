@@ -19,12 +19,20 @@ public class Response {
         this.message = ApiEngineResponseCodeEnum.success.getMessage();
     }
 
-    public void error(ResponseCode responseCode) {
-        if (responseCode == ApiEngineResponseCodeEnum.success) {
-            responseCode = ApiEngineResponseCodeEnum.api_execute_exception;
+    public void error(int code, String message) {
+        if (code == ApiEngineResponseCodeEnum.success.getCode()) {
+            code = ApiEngineResponseCodeEnum.api_execute_exception.getCode();
         }
-        this.code = responseCode.getCode();
-        this.message = responseCode.getMessage();
+        this.code = code;
+        this.message = message;
+    }
+
+    public void error(ResponseCode responseCode) {
+        error(responseCode.getCode(), responseCode.getMessage());
+    }
+
+    public void error(ResponseCode responseCode, String overrideMessage) {
+        error(responseCode.getCode(), overrideMessage);
     }
 
     public String getApiName() {
