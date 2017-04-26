@@ -42,18 +42,17 @@ public class SimpleEngine implements Engine {
 
     @Override
     public Response execute(Request request) throws ApiNotFoundException, ApiExecuteException {
-        String name = request.getApiName();
-        if (!hasApi(name)) {
-            throw new ApiNotFoundException(name);
+        String apiName = request.getApiName();
+        if (!hasApi(apiName)) {
+            throw new ApiNotFoundException(apiName);
         }
-        request.setExecuteByEngineTimestamp(System.currentTimeMillis());
-        Response response;
         try {
-            response = getApiWrapper(name).getApi().execute(request);
+            request.setExecuteByEngineTimestamp(System.currentTimeMillis());
+            Response response = getApiWrapper(apiName).getApi().execute(request);
+            response.setOverByEngineTimestamp(System.currentTimeMillis());
+            return response;
         } catch (Exception e) {
             throw new ApiExecuteException(ApiEngineResponseCodeEnum.api_execute_exception, e);
         }
-        response.setOverByEngineTimestamp(System.currentTimeMillis());
-        return response;
     }
 }
