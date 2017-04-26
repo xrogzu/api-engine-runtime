@@ -15,11 +15,9 @@ import com.github.xuzw.api_engine_runtime.exception.ApiNotFoundException;
 public interface Engine {
     List<String> getApiNames();
 
-    boolean hasApi(String name);
-
     void setApi(String name, ApiWrapper apiWrapper);
 
-    ApiWrapper getApiWrapper(String name);
+    ApiWrapper getApiWrapper(String name) throws ApiNotFoundException;
 
-    Response execute(Request request) throws ApiNotFoundException, ApiExecuteException;
+    Response execute(Request request) throws ApiExecuteException;
 }

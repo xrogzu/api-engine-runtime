@@ -11,7 +11,6 @@ import com.github.xuzw.api_engine_runtime.api.ApiWrapper;
 import com.github.xuzw.api_engine_runtime.api.Request;
 import com.github.xuzw.api_engine_runtime.api.Response;
 import com.github.xuzw.api_engine_runtime.exception.ApiExecuteException;
-import com.github.xuzw.api_engine_runtime.exception.ApiNotFoundException;
 
 /**
  * @author 徐泽威 xuzewei_2012@126.com
@@ -26,11 +25,6 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public boolean hasApi(String name) {
-        return map.containsKey(name);
-    }
-
-    @Override
     public void setApi(String name, ApiWrapper apiWrapper) {
         map.put(name, apiWrapper);
     }
@@ -41,17 +35,15 @@ public class SimpleEngine implements Engine {
     }
 
     @Override
-    public Response execute(Request request) throws ApiNotFoundException, ApiExecuteException {
-        String apiName = request.getApiName();
-        if (!hasApi(apiName)) {
-            throw new ApiNotFoundException(apiName);
-        }
+    public Response execute(Request request) throws ApiExecuteException {
         try {
             request.setExecuteByEngineTimestamp(System.currentTimeMillis());
-            Response response = getApiWrapper(apiName).getApi().execute(request);
+            Response response = getApiWrapper(request.getApiName()).getApi().execute(request);
             response.setOverByEngineTimestamp(System.currentTimeMillis());
             return response;
-        } catch (Exception e) {
+        } catch (ApiExecuteException e) {
+            throw e;
+        } catch (Throwable e) {
             throw new ApiExecuteException(ApiEngineResponseCodeEnum.api_execute_exception, e);
         }
     }
