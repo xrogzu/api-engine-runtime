@@ -12,13 +12,21 @@ public enum ApiEngineResponseCodeEnum implements ResponseCode {
      */
     success(0, "成功"),
     /**
+     * 请求数据无法解析
+     */
+    request_data_cannot_be_resolved_exception(1, "请求数据无法解析"),
+    /**
      * API未找到
      */
-    api_not_found_exception(1, "API未找到"),
+    api_not_found_exception(2, "API未找到"),
     /**
      * API执行异常
      */
-    api_execute_exception(2, "API执行异常");
+    api_execute_exception(3, "API执行异常"),
+    /**
+     * 未知异常
+     */
+    unknown_exception(4, "未知异常");
 
     private final int code;
     private final String message;
