@@ -4,13 +4,14 @@
 
     <groupId>com.github.xuzw</groupId>
     <artifactId>api-engine-runtime</artifactId>
-    <version>1.0.1</version>
+    <version>${api-engine-runtime.version}</version>
     <packaging>jar</packaging>
 
     <name>api-engine-runtime</name>
     <url>http://maven.apache.org</url>
 
     <properties>
+        <api-engine-runtime.version>1.0.2</api-engine-runtime.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
